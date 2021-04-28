@@ -1,21 +1,125 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import Login from './src/screens/login';
+import Signup from './src/screens/Signup';
+import GrowerHome from './src/screens/Grower/GrowerHome';
+import AdminHome from './src/screens/Admin/AdminHome'
+import AgronomistHome from './src/screens/Agronomist/AgronomistHome'
+import SponsorHome from './src/screens/Sponsor/SponsorHome'
+import VendorHome from './src/screens/Vendor/VendorHome'
+import SoilhealthLabHome from './src/screens/SoilHealthLab/SoilHealthLabHome'
 
-export default function App() {
+import {Context as AuthContext} from './src/context/AuthContext'
+import {Provider as AuthProvider} from './src/context/AuthContext'
+import { useContext, useEffect } from 'react';
+import { View, Text } from 'react-native';
+const  App = () =>  {
+  const {state:{loading, userdata, loggedin,},tryLocalSignin}  = useContext(AuthContext)
+  const AuthStack = createStackNavigator();
+  const AdminStack = createStackNavigator();
+  const GrowerStack = createStackNavigator();
+  const AgronomistStack = createStackNavigator();
+  const SponsorStack = createStackNavigator();
+  const VendorStack = createStackNavigator();
+  const SoilHealthStack = createStackNavigator();
+  
+  const AuthScreens = ({navigation}) => {
+    return(
+      <AuthStack.Navigator initialRouteName="login">
+        <AuthStack.Screen name="signup" options={{headerShown:true}} component={Signup}/>
+        <AuthStack.Screen name="login" component={Login} options={{headerShown:false}} />
+      </AuthStack.Navigator>
+    )
+  }
+
+  const AdminScreens = ({navigation}) => {
+    return(
+      <AdminStack.Navigator>
+        <AdminStack.Screen name="adminhome" component={AdminHome} />
+      </AdminStack.Navigator>
+    )
+  }
+
+  const GrowerScreens = ({navigation}) => {
+    return(
+      <GrowerStack.Navigator>
+        <GrowerStack.Screen name="growerhome" component={GrowerHome} />
+      </GrowerStack.Navigator>
+    )
+  }
+
+  const AgronomistScreens = ({navigation}) => {
+    return(
+      <AgronomistStack.Navigator>
+        <AgronomistStack.Screen name="agronomisthome" component={AgronomistHome} />
+      </AgronomistStack.Navigator>
+    )
+  }
+
+  const SponsorScreens = ({navigation}) => {
+    return(
+      <SponsorStack.Navigator>
+        <SponsorStack.Screen name="sponsorhome" component={SponsorHome} />
+      </SponsorStack.Navigator>
+    )
+  }
+
+  const SoilhealthLabScreens = ({navigation}) =>{
+    return(
+      <SoilHealthStack.Navigator>
+        <SoilHealthStack.Screen name="SoilhealthLabHome" component={SoilhealthLabHome} />
+      </SoilHealthStack.Navigator>
+    )
+  }
+  const VendorScreens = ({navigation}) => {
+    return(
+      <VendorStack.Navigator>
+        <VendorStack.Screen name="vendorhome" component={VendorHome} />
+      </VendorStack.Navigator>
+    )
+  }
+
+  useEffect(() => {
+    tryLocalSignin();
+  },[loading])
+  if(loading){
+    return(
+      <View style={{flex:1, justifyContent:"center", alignItems:"center"}}>
+        <Text>Loading</Text>
+      </View>
+    )
+  }
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+     <NavigationContainer>
+      {userdata === null 
+      ?<AuthScreens />
+      
+      :userdata.role === "admin"
+      ?<AdminScreens />
+      
+      :userdata.role === "sponsor"
+      ?<SponsorScreens />
+
+      :userdata.role === "grower"
+      ?<GrowerScreens />
+      
+      :userdata.role === "argo"
+      ?<AgronomistScreens />
+
+      :userdata.role === "vendor"
+      ?<VendorScreens />
+      :<SoilhealthLabScreens />
+      }
+     </NavigationContainer>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default () => {
+  return(
+    <AuthProvider>
+      <App />
+    </AuthProvider>
+  )
+}
+
