@@ -19,6 +19,7 @@ export default function GrowerHome ({navigation}) {
       id: 3,
       name: 'Message',
       img: require('../../assets/Images/7b7bc658d3fce83780679e84dc62f2fa.png'),
+      src: 'Message'
     },  
   ]
   onclick_item=(src)=> {
@@ -31,6 +32,10 @@ export default function GrowerHome ({navigation}) {
         navigation.navigate('ViewUser')
         //navigate
         break;
+        case "Message":
+          navigation.navigate('Message')
+          //navigate
+          break;
       default:
       //whatever you want
     }

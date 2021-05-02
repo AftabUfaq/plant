@@ -6,31 +6,31 @@ import api from '../constants/api'
 export default function Signup ({navigation}) {
 
 const [selectedValue, setSelectedValue] = useState("grower");
-const [firstName, setFirstName] = useState("aftab")
+const [firstName, setFirstName] = useState("")
 const [fnerror, setFnerror] = useState("")
 
-const [lastName, setLastName] = useState("ufaq")
+const [lastName, setLastName] = useState("")
 const [lnerror, setlneror] = useState("")
 
 const [username, setUsername] = useState("");
 const [usernameerror , setUserNameError] = useState("");
 
-const [password, setPassword] = useState("123456");
+const [password, setPassword] = useState("");
 const [passworderror, setPassworderror] = useState("")
 
-const [area, setArea] = useState("rawalpindi")
+const [area, setArea] = useState("")
 const [areaerror , setAreaError] = useState("")
 
-const [address, setAddress] = useState("bahria town Phase 8");
+const [address, setAddress] = useState("");
 const [addresserror, setAddressError]= useState("")
 
-const [mobilenumber, setMobileNumber] = useState("923408906107")
+const [mobilenumber, setMobileNumber] = useState("")
 const [mobilenumbererror, setMobileNumberError] = useState("");
 
-const [cnic, setCnic] = useState("1620275381647")
+const [cnic, setCnic] = useState("")
 const [cnicError , setCnicError] = useState("")
 
-const [accountnumber, setAccountNumber]= useState("1234567890123")
+const [accountnumber, setAccountNumber]= useState("")
 const [accountnumbererror, setAccountNumbererror] = useState("")
  
 const register_user = () => {

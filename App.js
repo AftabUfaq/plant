@@ -4,6 +4,8 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Login from './src/screens/login';
 import Signup from './src/screens/Signup';
 import GrowerHome from './src/screens/Grower/GrowerHome';
+import Message from './src/screens/Grower/Message';
+import UserCard from './src/screens/Grower/UserCard';
 import AdminHome from './src/screens/Admin/AdminHome'
 import AgronomistHome from './src/screens/Agronomist/AgronomistHome'
 import SponsorHome from './src/screens/Sponsor/SponsorHome'
@@ -45,6 +47,8 @@ const  App = () =>  {
     return(
       <GrowerStack.Navigator>
         <GrowerStack.Screen name="growerhome" component={GrowerHome} />
+        <GrowerStack.Screen name="Message" component={Message} />
+        <GrowerStack.Screen name="UserCard" component={UserCard} />
       </GrowerStack.Navigator>
     )
   }
