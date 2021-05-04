@@ -174,8 +174,6 @@ return(
         }
         <View style={styles.space}/>
         <Text>Not Registered? Click on <Link style={{color: 'blue'}} to="/signup">Signup/سائن اپ</Link> </Text>
-    
-        
       </ImageBackground>
     );}
 

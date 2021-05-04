@@ -47,7 +47,7 @@ const  App = () =>  {
     return(
       <GrowerStack.Navigator>
         <GrowerStack.Screen name="growerhome" component={GrowerHome} />
-        <GrowerStack.Screen name="Message" component={Message} />
+        <GrowerStack.Screen name="Message" component={Message}/>
         <GrowerStack.Screen name="UserCard" component={UserCard} />
       </GrowerStack.Navigator>
     )

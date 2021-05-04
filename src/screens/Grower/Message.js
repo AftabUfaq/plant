@@ -7,9 +7,8 @@ import {
   Image,
   FlatList,
 } from 'react-native';
-
 export default function Contacts({navigation}) {
-      contact= [
+      const contact= [
         {id:1,  name: "Mark Doe",    image:"https://bootdey.com/img/Content/avatar/avatar7.png"},
         {id:2,  name: "Clark Man",   image:"https://bootdey.com/img/Content/avatar/avatar6.png"} ,
         {id:3,  name: "Jaden Boor",  image:"https://bootdey.com/img/Content/avatar/avatar5.png"} ,
@@ -23,7 +22,7 @@ export default function Contacts({navigation}) {
       ]
     renderItem = ({item}) => {
     return (
-      <TouchableOpacity onPress={() => navigation.navigate('UserCard', contact)}>
+      <TouchableOpacity onPress={() => navigation.navigate('UserCard', item)}>
         <View style={styles.row}>
           <Image source={{ uri: item.image }} style={styles.pic} />
           <View>
@@ -44,7 +43,7 @@ export default function Contacts({navigation}) {
           renderItem={renderItem}/>
       </View>
     );
-  }
+  };
 
 const styles = StyleSheet.create({
   row: {
