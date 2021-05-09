@@ -6,7 +6,7 @@ export default function GrowerHome ({navigation}) {
     {
       id: 1,
       name: 'View All Users',
-      img: require('../../assets/Images/depositphotos_79285928-stock-illustration-task-list-icon-from-commerce-removebg-preview.png'),
+      img: require('../../assets/Images/user_view.png'),
       src: 'ViewUser'
     },  
     {
@@ -14,6 +14,12 @@ export default function GrowerHome ({navigation}) {
       name: 'Delete User',
       img: require('../../assets//Images/remove-user-male.png'),
       src: 'DeleteUser'
+    },  
+    {
+      id: 3,
+      name: 'Update User',
+      img: require('../../assets//Images/user_refresh.png'),
+      src: 'UpdateUser'
     },  
   ]
   let onclick_item=(src)=> {
@@ -23,7 +29,7 @@ export default function GrowerHome ({navigation}) {
         navigation.navigate('UpdateUser')
         break;
       case "ViewUser":
-        navigation.navigate('ViewUsers')
+        navigation.navigate('ViewUser')
         //navigate
         break;
         case "DeleteUser":

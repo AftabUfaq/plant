@@ -45,22 +45,6 @@ const DeleteUser = ({ navigation }) => {
               />
               <Button title="Delete User" onPress={deleteUser} />
             </View>
-            <Text
-              style={{
-                fontSize: 18,
-                textAlign: 'center',
-                color: 'grey'
-              }}>
-              Example of SQLite Database in React Native
-            </Text>
-            <Text
-              style={{
-                fontSize: 16,
-                textAlign: 'center',
-                color: 'grey'
-              }}>
-              www.aboutreact.com
-            </Text>
           </View>
         </SafeAreaView>
       );

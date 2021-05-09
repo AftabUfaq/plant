@@ -187,3 +187,45 @@ const register_user = () => {
           <Picker.Item label="Agronomist" value="agro" />
       </Picker>
      
+        <TouchableOpacity style={styles.loginBtn}
+        onPress={register_user}
+        >
+        <Text style={styles.loginText}>Signup/سائن اپ</Text>
+      </TouchableOpacity>
+      </ScrollView>
+      </ImageBackground>
+    )
+  }
+  const styles = StyleSheet.create({
+    input: {
+      width: 350,
+      height: 50,
+      margin: 10,
+      padding: 8,
+      fontSize: 18,
+      borderWidth: 1,
+      color: "black",
+    },
+     container: {
+       flex: 1,
+       justifyContent: 'center',
+       alignItems: 'center'
+     },
+    backgroundImage: {
+      flex: 1,
+    },
+    space: {
+      width: 20, // or whatever size you need
+      height: 150,
+    },
+    loginBtn: {
+      width: "80%",
+      borderRadius: 25,
+      height: 50,
+      alignItems: "center",
+      justifyContent: "center",
+      marginTop:10,
+      backgroundColor: "#32CD32",
+    },
+
+  })

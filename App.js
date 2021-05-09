@@ -7,6 +7,9 @@ import GrowerHome from './src/screens/Grower/GrowerHome';
 import Message from './src/screens/Grower/Message';
 import UserCard from './src/screens/Grower/UserCard';
 import AdminHome from './src/screens/Admin/AdminHome'
+import ViewUser from './src/screens/Admin/ViewUser'
+import DeleteUser from './src/screens/Admin/DeleteUser'
+import UpdateUser from './src/screens/Admin/UpdateUser'
 import AgronomistHome from './src/screens/Agronomist/AgronomistHome'
 import SponsorHome from './src/screens/Sponsor/SponsorHome'
 import VendorHome from './src/screens/Vendor/VendorHome'
@@ -39,6 +42,9 @@ const  App = () =>  {
     return(
       <AdminStack.Navigator>
         <AdminStack.Screen name="adminhome" component={AdminHome} />
+        <AdminStack.Screen name="ViewUser" component={ViewUser} />
+        <AdminStack.Screen name="DeleteUser" component={DeleteUser} />
+        <AdminStack.Screen name="UpdateUser" component={UpdateUser} />
       </AdminStack.Navigator>
     )
   }
