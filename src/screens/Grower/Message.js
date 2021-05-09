@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import React, {useContext,useState, useEffect} from 'react';
+=======
+import React from 'react';
+>>>>>>> bda3578973cc6c4bf1cd4826870fa1e114090480
 import {
   StyleSheet,
   Text,

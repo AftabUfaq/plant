@@ -56,6 +56,4 @@ const styles = StyleSheet.create({
   },
 });
 
-/*
 
-*/

@@ -85,7 +85,7 @@ var requestOptions = {
 fetch(`${api}/uploadImage`, requestOptions)
   .then(response => response.json())
   .then(result => {
-    console.log(result, 'resulttttt')
+   
     setImage(`${api}/images/${result.filename}`)
   })
   .catch(error => console.log('errorrrrrrr', error));
