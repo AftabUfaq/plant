@@ -1,8 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { FlatList, Text, View, SafeAreaView } from 'react-native';
-import * as SQLite from 'expo-sqlite';
-
-const db = SQLite.openDatabase('dbName.db')
 
 export default function ViewUser({navigation}){
   let [flatListItems, setFlatListItems] = useState([]);

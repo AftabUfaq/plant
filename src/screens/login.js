@@ -1,5 +1,5 @@
 import React, { useState,useEffect,useContext } from 'react';
-import { View, Button,TextInput, ToastAndroid, StyleSheet,Text,BackgroundImage, ImageBackground, TouchableOpacity
+import { View, TextInput, ToastAndroid, StyleSheet,Text,BackgroundImage, ImageBackground, TouchableOpacity
 } from 'react-native'
 import { Link } from '@react-navigation/native';
 import {Picker} from '@react-native-picker/picker';
@@ -17,15 +17,20 @@ export default function Login ({navigation}) {
         alert('Please enter your username and password!');
         return;
     }
-    let formdata = new FormData();
-      formdata.append("username",userName);
-      formdata.append("password",userPassword);
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    
       try {
         fetch(`${api}/login`, {
           method: 'POST',
-          body:formdata
+          headers:myHeaders,
+          body:JSON.stringify({
+            "username":userName,
+            "password":userPassword,
+          })
        }).then((response) => response.json())
         .then((json) => {
+          console.log(json)
           if(json.error){
             ToastAndroid.showWithGravityAndOffset(
               "failded with some error",
@@ -68,12 +73,15 @@ export default function Login ({navigation}) {
 
   let farmerlogin = () => {
     if(id.length){
-      let formdata = new FormData();
-      formdata.append("id",id);
+      var myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
       try {
         fetch(`${api}/farmerlogin`, {
           method: 'POST',
-          body:formdata
+          headers:myHeaders,
+          body:JSON.stringify({
+            "id":id
+          })
        }).then((response) => response.json())
         .then((json) => {
           if(json.error){
@@ -130,6 +138,7 @@ return(
             <Picker.Item label="Soil Health Lab" value="agronomist" />
             <Picker.Item label="Sponsor" value="sponsor" />
             <Picker.Item label="Agronomist" value="agro" />
+            <Picker.Item label="Admin" value="admin" />
         </Picker>
         {selectedValue === "grower" || selectedValue === "vendor"?
         <View style={{width:'100%', justifyContent:"center", alignItems:"center"}}>
@@ -174,8 +183,6 @@ return(
         }
         <View style={styles.space}/>
         <Text>Not Registered? Click on <Link style={{color: 'blue'}} to="/signup">Signup/سائن اپ</Link> </Text>
-    
-        
       </ImageBackground>
     );}
 

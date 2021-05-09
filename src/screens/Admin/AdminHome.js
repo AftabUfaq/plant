@@ -23,7 +23,7 @@ export default function GrowerHome ({navigation}) {
         navigation.navigate('UpdateUser')
         break;
       case "ViewUser":
-        navigation.navigate('ViewUser')
+        navigation.navigate('ViewUsers')
         //navigate
         break;
         case "DeleteUser":
