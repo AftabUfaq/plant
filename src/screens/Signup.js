@@ -1,5 +1,5 @@
-import React, { useState,useEffect } from 'react';
-import {View, StyleSheet,ScrollView,ToastAndroid, Alert, ImageBackground, TouchableOpacity,Text} from 'react-native';
+import React, { useState} from 'react';
+import {StyleSheet,ScrollView,ToastAndroid,ImageBackground, TouchableOpacity,Text} from 'react-native';
 import TextInput from '../components/Textinput'
 import {Picker} from '@react-native-picker/picker';
 import api from '../constants/api'
