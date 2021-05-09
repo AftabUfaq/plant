@@ -1,7 +1,8 @@
-import React, { useState} from 'react';
-import {StyleSheet,ScrollView,ToastAndroid,ImageBackground, TouchableOpacity,Text} from 'react-native';
+import React, { useState,useEffect } from 'react';
+import {View, StyleSheet,ScrollView,ToastAndroid,Button, Alert,Image,Platform, ImageBackground, TouchableOpacity,Text} from 'react-native';
 import TextInput from '../components/Textinput'
 import {Picker} from '@react-native-picker/picker';
+import * as ImagePicker from 'expo-image-picker'; 
 import api from '../constants/api'
 export default function Signup ({navigation}) {
 
@@ -32,7 +33,63 @@ const [cnicError , setCnicError] = useState("")
 
 const [accountnumber, setAccountNumber]= useState("")
 const [accountnumbererror, setAccountNumbererror] = useState("")
+
+const [image, setImage] = useState(null);
+
+useEffect(() => {
+  (async () => {
+    if (Platform.OS !== 'web') {
+      const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+      if (status !== 'granted') {
+        alert('Sorry, we need camera roll permissions to make this work!');
+      }
+    }
+  })();
+}, []);
+
+const pickImage = async () => {
+  let result = await ImagePicker.launchImageLibraryAsync({
+    mediaTypes: ImagePicker.MediaTypeOptions.All,
+    allowsEditing: true,
+    aspect: [4, 3],
+    quality: 1,
+  });
+
  
+
+  if (!result.cancelled) {
+   
+    uploadimage(result.uri);
+  }
+}
+
+const uploadimage = (uri) => {
+  
+  var formdata = new FormData();
+  var photo = {
+    uri: uri,
+    type: 'image/jpeg',
+    name: 'photo.jpg',
+  };
+formdata.append("image", photo);
+
+var requestOptions = {
+  method: 'POST',
+  headers: {
+    'Content-Type' :'multipart/form-data'
+},
+  body: formdata
+ 
+};
+
+fetch(`${api}/uploadImage`, requestOptions)
+  .then(response => response.json())
+  .then(result => {
+   
+    setImage(`${api}/images/${result.filename}`)
+  })
+  .catch(error => console.log('errorrrrrrr', error));
+}
 const register_user = () => {
   if(username.length < 3){
     setUserNameError("Please Enter user Name");
@@ -44,22 +101,25 @@ const register_user = () => {
       return;
   }
   setPassworderror("");
-  let formdata = new FormData();
-  formdata.append("firstname", firstName);
-  formdata.append("lastname",lastName);
-  formdata.append("username", username);
-  formdata.append("password",password);
-  formdata.append("area", area);
-  formdata.append("role", selectedValue);
-  formdata.append("cnic", cnic);
-  formdata.append("mobilenumber", mobilenumber);
-  formdata.append("accountnumber", accountnumber);
-  formdata.append("address", address);
+  var myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/json");
   try {
     fetch(`${api}/signup`, {
       method: 'POST',
-      
-      body:formdata
+      headers:myHeaders,
+      body:JSON.stringify({
+        "firstname":firstName,
+        "lastname":lastName,
+        "username":username,
+        "password":password,
+        "area":area,
+        "role":selectedValue,
+        "cnic":cnic,
+        "mobilenumber":mobilenumber,
+        "accountnumber":accountnumber,
+        "address":address,
+        "image":image
+      })
    }).then((response) => response.json())
     .then((json) => {
       if(json.error){
@@ -93,7 +153,10 @@ const register_user = () => {
       <ImageBackground source={require('../assets/Images/pdflowersetproject10-adj-38_2.jpg')} style={styles.container}> 
         <ScrollView style={{width:"100%", marginTop:40,}}contentContainerStyle={{justifyContent:"center", alignItems:"center", paddingBottom:10,}} >
         <Text>Sign Up</Text> 
-        
+        <View style={{ flex: 1, marginVertical:19, alignItems: 'center', justifyContent: 'center' }}>
+          <Button title="Upload Image" onPress={pickImage} />
+          {image && <Image source={{ uri: image }} style={{ width: 100, height: 100,marginTop:20, marginHorizontal:20, borderRadius:100, }} />}
+        </View>
         <TextInput label="First name" value={firstName} setValue={setFirstName} error={fnerror} setError={setFnerror} />
        
         <TextInput label="Last name" value={lastName} setValue={setLastName} error={lnerror} setError={setlneror} />
@@ -124,45 +187,3 @@ const register_user = () => {
           <Picker.Item label="Agronomist" value="agro" />
       </Picker>
      
-        <TouchableOpacity style={styles.loginBtn}
-        onPress={register_user}
-        >
-        <Text style={styles.loginText}>Signup/سائن اپ</Text>
-      </TouchableOpacity>
-      </ScrollView>
-      </ImageBackground>
-    )
-  }
-  const styles = StyleSheet.create({
-    input: {
-      width: 350,
-      height: 50,
-      margin: 10,
-      padding: 8,
-      fontSize: 18,
-      borderWidth: 1,
-      color: "black",
-    },
-     container: {
-       flex: 1,
-       justifyContent: 'center',
-       alignItems: 'center'
-     },
-    backgroundImage: {
-      flex: 1,
-    },
-    space: {
-      width: 20, // or whatever size you need
-      height: 150,
-    },
-    loginBtn: {
-      width: "80%",
-      borderRadius: 25,
-      height: 50,
-      alignItems: "center",
-      justifyContent: "center",
-      marginTop:10,
-      backgroundColor: "#32CD32",
-    },
-
-  })

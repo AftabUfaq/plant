@@ -5,38 +5,31 @@ export default function GrowerHome ({navigation}) {
   const plants = [
     {
       id: 1,
-      name: 'Scan Code',
-      img: require('../../assets/Images/scan.png'),
-      src: 'ScanCode'
-    },
-    {
-      id: 2,
-      name: 'TaskList',
+      name: 'View All Users',
       img: require('../../assets/Images/depositphotos_79285928-stock-illustration-task-list-icon-from-commerce-removebg-preview.png'),
       src: 'ViewUser'
     },  
     {
-      id: 3,
-      name: 'Message',
-      img: require('../../assets/Images/7b7bc658d3fce83780679e84dc62f2fa.png'),
-      src: 'Message'
+      id: 2,
+      name: 'Delete User',
+      img: require('../../assets//Images/remove-user-male.png'),
+      src: 'DeleteUser'
     },  
   ]
-  
-  onclick_item = (src) => {
+  let onclick_item=(src)=> {
     switch (src) {
-      case "ScanCode":
+      case "UpdateUser":
         //navigate
-        navigation.navigate('ScanCode')
+        navigation.navigate('UpdateUser')
         break;
       case "ViewUser":
         navigation.navigate('ViewUser')
         //navigate
         break;
-        case "Message":
-          navigation.navigate('Message')
-          //navigate
-          break;
+        case "DeleteUser":
+        navigation.navigate('DeleteUser')
+        //navigate
+        break;
       default:
       //whatever you want
     }

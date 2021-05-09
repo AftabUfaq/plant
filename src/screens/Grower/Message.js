@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext,useState, useEffect} from 'react';
 import {
   StyleSheet,
   Text,
@@ -7,19 +7,34 @@ import {
   Image,
   FlatList,
 } from 'react-native';
+import {Context as AuthContext} from '../../context/AuthContext'
+import api from '../../constants/api'
 export default function Contacts({navigation}) {
-      const contact= [
-        {id:1,  name: "Mark Doe",    image:"https://bootdey.com/img/Content/avatar/avatar7.png"},
-        {id:2,  name: "Clark Man",   image:"https://bootdey.com/img/Content/avatar/avatar6.png"} ,
-        {id:3,  name: "Jaden Boor",  image:"https://bootdey.com/img/Content/avatar/avatar5.png"} ,
-        {id:4,  name: "Srick Tree",  image:"https://bootdey.com/img/Content/avatar/avatar4.png"} ,
-        {id:5,  name: "Erick Doe",   image:"https://bootdey.com/img/Content/avatar/avatar3.png"} ,
-        {id:6,  name: "Francis Doe", image:"https://bootdey.com/img/Content/avatar/avatar2.png"} ,
-        {id:8,  name: "Matilde Doe", image:"https://bootdey.com/img/Content/avatar/avatar1.png"} ,
-        {id:9,  name: "John Doe",    image:"https://bootdey.com/img/Content/avatar/avatar4.png"} ,
-        {id:10, name: "Fermod Doe",  image:"https://bootdey.com/img/Content/avatar/avatar7.png"} ,
-        {id:11, name: "Danny Doe",   image:"https://bootdey.com/img/Content/avatar/avatar1.png"},
-      ]
+  const {state:{userdata}} = useContext(AuthContext);
+  const [contact, setContact] = useState([])
+  
+  useEffect(() => {
+    var myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/json");
+    var requestOptions = {
+      method: 'POST',
+      headers:myHeaders,
+      body:JSON.stringify({
+        area:`${userdata.area}`,
+        role:`${userdata.role}`
+      })
+    }
+    fetch(`${api}/getallusers`,requestOptions).then((data) => data.json())
+    .then((res) => {
+      console.log(res)
+      setContact(res)
+    }).catch((err) => {
+      console.log(err)
+    })
+  },[])
+  
+  
+
     renderItem = ({item}) => {
     return (
       <TouchableOpacity onPress={() => navigation.navigate('UserCard', item)}>
@@ -27,7 +42,7 @@ export default function Contacts({navigation}) {
           <Image source={{ uri: item.image }} style={styles.pic} />
           <View>
             <View style={styles.nameContainer}>
-              <Text style={styles.nameTxt} numberOfLines={1} ellipsizeMode="tail">{item.name}</Text>
+              <Text style={styles.nameTxt} numberOfLines={1} ellipsizeMode="tail">{item.firstname} {item.lastname}</Text>
             </View>
           </View>
         </View>

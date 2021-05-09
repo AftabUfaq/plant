@@ -1,8 +1,9 @@
 import React from 'react';
-import {View, SafeAreaView, Image, Text,TouchableOpacity,StyleSheet} from 'react-native';
+import {View, SafeAreaView, Image,Linking, Text,TouchableOpacity,StyleSheet} from 'react-native';
 
 const UserCard = ({navigation,route}) => {
   const contact= route.params;
+  const message = "May the last Ashrah becomes the source of mughfirah for all of us. Share this prayer with everyone you know so that we can maximize the impact. Little deeds go a long way. "
   return (
     <SafeAreaView>
     <View style={{backgroundColor: '#C0C0C0' , height: 230, borderRadius: 10}}>
@@ -21,10 +22,18 @@ const UserCard = ({navigation,route}) => {
           </Text>
           <View style={styles.space}/>
           <View style={{flexDirection:'row', flex: 1}}>
-              <TouchableOpacity style={styles.button}>
+              <TouchableOpacity style={styles.button} onPress={() => {
+            Linking.openURL(
+              `http://api.whatsapp.com/send?text=${message}&phone=${contact.mobilenumber}`
+            );
+          }} >
                 <Image source={require('../../assets/Images/218-2180655_phone-call-icon-png.png')} style={styles.picture}/>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.button}>
+              <TouchableOpacity style={styles.button} onPress={() => {
+                  Linking.openURL(
+                    `sms:${contact.mobilenumber}?body=${message}`
+                  );
+                }}>
                 <Image source={require('../../assets/Images/icon-18.png')} style={styles.picture}/>
               </TouchableOpacity>
             </View></View>
@@ -46,3 +55,5 @@ const styles = StyleSheet.create({
     height: 20,
   },
 });
+
+
