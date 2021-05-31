@@ -4,6 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Login from './src/screens/login';
 import Signup from './src/screens/Signup';
 import GrowerHome from './src/screens/Grower/GrowerHome';
+import ScanCode from './src/screens/Grower/ScanCode';
 import Message from './src/screens/Grower/Message';
 import UserCard from './src/screens/Grower/UserCard';
 import AdminHome from './src/screens/Admin/AdminHome'
@@ -14,6 +15,9 @@ import AgronomistHome from './src/screens/Agronomist/AgronomistHome'
 import SponsorHome from './src/screens/Sponsor/SponsorHome'
 import VendorHome from './src/screens/Vendor/VendorHome'
 import SoilhealthLabHome from './src/screens/SoilHealthLab/SoilHealthLabHome'
+import MessagesSHL from './src/screens/SoilHealthLab/Messages'
+import UploadReport from './src/screens/SoilHealthLab/UploadReport'
+import UserCardSHL from './src/screens/SoilHealthLab/UserCard'
 
 import {Context as AuthContext} from './src/context/AuthContext'
 import {Provider as AuthProvider} from './src/context/AuthContext'
@@ -55,6 +59,8 @@ const  App = () =>  {
         <GrowerStack.Screen name="growerhome" component={GrowerHome} />
         <GrowerStack.Screen name="Message" component={Message}/>
         <GrowerStack.Screen name="UserCard" component={UserCard} />
+        <GrowerStack.Screen name="ScanCode" component={ScanCode} />
+
       </GrowerStack.Navigator>
     )
   }
@@ -79,6 +85,9 @@ const  App = () =>  {
     return(
       <SoilHealthStack.Navigator>
         <SoilHealthStack.Screen name="SoilhealthLabHome" component={SoilhealthLabHome} />
+        <SoilHealthStack.Screen name="Message" component={MessagesSHL} />
+        <SoilHealthStack.Screen name="UploadReport" component={UploadReport} />
+        <SoilHealthStack.Screen name="UserCard" component={UserCardSHL} />
       </SoilHealthStack.Navigator>
     )
   }
@@ -119,6 +128,7 @@ const  App = () =>  {
 
       :userdata.role === "vendor"
       ?<VendorScreens />
+      
       :<SoilhealthLabScreens />
       }
      </NavigationContainer>
