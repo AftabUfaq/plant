@@ -1,61 +1,61 @@
 import React, { useState, useEffect } from 'react';
-import { FlatList, Text, View, SafeAreaView } from 'react-native';
+import { TouchableOpacity, Text, View,Linking,StyleSheet, SafeAreaView } from 'react-native';
 
-export default function ViewUser({navigation}){
-  let [flatListItems, setFlatListItems] = useState([]);
-
-  useEffect(() => {
-    db.transaction((tx) => {
-      tx.executeSql(
-        'SELECT * FROM userRegister',
-        [],
-        (tx, results) => {
-          var temp = [];
-          for (let i = 0; i < results.rows.length; ++i)
-            temp.push(results.rows.item(i));
-          setFlatListItems(temp);
-        }
-      );
-    });
-  }, []);
-
-  let listViewItemSeparator = () => {
-    return (
-      <View
-        style={{
-          height: 0.2,
-          width: '100%',
-          backgroundColor: '#808080'
-        }}
-      />
-    );
-  };
-
-  let listItemView = (item) => {
-    return (
-      <View
-        key={item.user_id}
-        style={{ backgroundColor: 'white', padding: 20 }}>
-        <Text>Id: {item.user_id}</Text>
-        <Text>Name: {item.user_name}</Text>
-        <Text>Password: {item.user_password}</Text>
-        <Text>Role: {item.user_role}</Text>
-      </View>
-    );
-  };
-
+export default function ViewUser({navigation,route}){
+ let user = route.params.user
+ const message = "May the last Ashrah becomes the source of mughfirah for all of us. Share this prayer with everyone you know so that we can maximize the impact. Little deeds go a long way. "
+  
+  const sentpayment = () => {
+      navigation.navigate("SentPatment",{user:user})
+  }
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <View style={{ flex: 1, backgroundColor: 'white' }}>
-        <View style={{ flex: 1 }}>
-          <FlatList
-            data={flatListItems}
-            ItemSeparatorComponent={listViewItemSeparator}
-            keyExtractor={(item, index) => index.toString()}
-            renderItem={({ item }) => listItemView(item)}
-          />
+      <View style={{ flex: 1, alignItems:"center", justifyContent:"center", backgroundColor: 'white' }}>
+         <Text>Name: {user.firstname} {user.lastname}</Text>
+         <Text>Cnic: {user.cnic} </Text>
+         <Text>Area: {user.area}</Text>
+         <Text>Mobile Number: {user.mobilenumber}</Text>
+         <Text>Role: {user.role}</Text>
+          
+        <View style={{flexDirection:"row", justifyContent:"space-evenly", width:'100%'}}>
+          <TouchableOpacity 
+          onPress={() => {
+            Linking.openURL(
+              `http://api.whatsapp.com/send?text=${message}&phone=${user.mobilenumber}`
+            );
+          }}
+          
+          style={{...styles.button, backgroundColor:"green"}}>
+             <Text style={{fontWeight:"bold", color:"#fff"}}>Whatsapp </Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity 
+              onPress={() => {
+                Linking.openURL(
+                  `sms:${user.mobilenumber}?body=${message}`
+                );
+              }}
+           style={{...styles.button, backgroundColor:"blue"}}>
+             <Text style={{fontWeight:"bold", color:"#fff"}}>Message </Text>
+          </TouchableOpacity>
         </View>
+        <TouchableOpacity 
+              onPress={() => {sentpayment()}}
+           style={{...styles.button, backgroundColor:"gray"}}>
+             <Text style={{fontWeight:"bold", color:"#fff"}}>Sent Payment </Text>
+          </TouchableOpacity>
       </View>
     </SafeAreaView>
   );
 };
+
+const styles = StyleSheet.create({
+  button:{
+    width:160, 
+    height:40,
+    marginTop:20,
+    justifyContent:"center", 
+    alignItems:"center", 
+    borderRadius:10
+  }
+})

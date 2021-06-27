@@ -4,13 +4,12 @@ const width = Dimensions.get('window').width-30;
 import api from '../../constants/api'
 export default function GrowerHome ({navigation}) {
   const [plants, setPlants] = useState([])
-  
   useEffect(() => {
     var requestOptions = {
       method: 'POST',
       redirect: 'manual'
     };
-      fetch(`${api}/getallusersforadmin`, requestOptions)
+      fetch(`${api}/getallpayments`, requestOptions)
       .then((response) => response.json())
       .then((result) => {
           setPlants(result);
@@ -19,45 +18,16 @@ export default function GrowerHome ({navigation}) {
       })
   },[])
 
-const deleteuser = (id) => {
-  var myHeaders = new Headers();
-  myHeaders.append("Content-Type", "application/json");
-  var requestOptions = {
-    method: 'POST',
-    headers:myHeaders,
-    body:JSON.stringify({
-        id:id
-    }),
-    redirect: 'manual'
-  };
- 
-  fetch(`${api}/deleteuser`, requestOptions)
-  .then((response) => response.json())
-  .then((result) => {
-    console.log(result)
-    let noJohn = plants.filter( el => el.id !== id ); 
-    setPlants(noJohn);
-  }).catch((err) => {
-    console.log(err)
-  })
-}
 const Card = ({user})=> {
   
   return (
     <TouchableOpacity style={styles.card} onPress={() => navigation.navigate("ViewUser",{user})} >
-      <Image source={{uri:user.image}} style={{width:40, height:40 , borderRadius:80, backgroundColor:"red"}} />
       <View style={{marginLeft:10}}>
-        <Text style={{color:"black"}}>Name: {user.username} </Text>
-        <Text style={{color:"black"}}>Role: {user.role} </Text>
-        <Text style={{color:"black"}}>Area: {user.area} </Text>
-      </View>
-      <View style={{marginLeft:10, flexDirection:"row",   width:120, justifyContent:"space-around"}} >
-        <TouchableOpacity onPress={() => {navigation.navigate("UpdateUser", {item:user})}}  style={{backgroundColor:"gray", justifyContent:"center", alignItems:"center", borderRadius:50, width:50, height:50,}}>
-            <Image style={{width:25, height:25}} source={require('../../assets//Images/user_refresh.png')}/>
-        </TouchableOpacity>
-        <TouchableOpacity style={{backgroundColor:"gray", justifyContent:"center", alignItems:"center", borderRadius:50, width:50, height:50,}} onPress={() => deleteuser(user.id)}>
-          <Image style={{width:25, height:25}}  source={require('../../assets//Images/remove-user-male.png')} />
-        </TouchableOpacity>
+        <Text style={{color:"black"}}>Sender Name: {user.sendername} </Text>
+        <Text style={{color:"black"}}>Sender Account Number: {user.senderaccountno} </Text>
+        <Text style={{color:"black"}}>Reciever Name: {user.recievername} </Text>
+        <Text style={{color:"black"}}>Reciever Account Number: {user.recieveraccountno} </Text>
+        <Text style={{color:"black"}}>Amount : {user.amount} </Text>
       </View>
     </TouchableOpacity>
    );
@@ -67,7 +37,7 @@ const Card = ({user})=> {
         <SafeAreaView style={{flex: 1, paddingHorizontal: 20, backgroundColor: 'white'}}>
         <View style={styles.header}>
           <Text style={{fontSize: 38, color: '#00B761', fontWeight: 'bold'}}>
-           Plant For Properity
+          Payment History
           </Text>
         </View>
         <FlatList

@@ -1,8 +1,7 @@
 import React, { useState,useEffect } from 'react';
-import {View, StyleSheet,ScrollView,ToastAndroid,Button, Alert,Image,Platform, ImageBackground, TouchableOpacity,Text} from 'react-native';
+import {View, StyleSheet,ScrollView,ToastAndroid, Alert, ImageBackground, TouchableOpacity,Text} from 'react-native';
 import TextInput from '../components/Textinput'
 import {Picker} from '@react-native-picker/picker';
-import * as ImagePicker from 'expo-image-picker'; 
 import api from '../constants/api'
 export default function Signup ({navigation}) {
 
@@ -33,63 +32,7 @@ const [cnicError , setCnicError] = useState("")
 
 const [accountnumber, setAccountNumber]= useState("")
 const [accountnumbererror, setAccountNumbererror] = useState("")
-
-const [image, setImage] = useState(null);
-
-useEffect(() => {
-  (async () => {
-    if (Platform.OS !== 'web') {
-      const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
-      if (status !== 'granted') {
-        alert('Sorry, we need camera roll permissions to make this work!');
-      }
-    }
-  })();
-}, []);
-
-const pickImage = async () => {
-  let result = await ImagePicker.launchImageLibraryAsync({
-    mediaTypes: ImagePicker.MediaTypeOptions.All,
-    allowsEditing: true,
-    aspect: [4, 3],
-    quality: 1,
-  });
-
  
-
-  if (!result.cancelled) {
-   
-    uploadimage(result.uri);
-  }
-}
-
-const uploadimage = (uri) => {
-  
-  var formdata = new FormData();
-  var photo = {
-    uri: uri,
-    type: 'image/jpeg',
-    name: 'photo.jpg',
-  };
-formdata.append("image", photo);
-
-var requestOptions = {
-  method: 'POST',
-  headers: {
-    'Content-Type' :'multipart/form-data'
-},
-  body: formdata
- 
-};
-
-fetch(`${api}/uploadImage`, requestOptions)
-  .then(response => response.json())
-  .then(result => {
-   
-    setImage(`${api}/images/${result.filename}`)
-  })
-  .catch(error => console.log('errorrrrrrr', error));
-}
 const register_user = () => {
   if(username.length < 3){
     setUserNameError("Please Enter user Name");
@@ -117,8 +60,7 @@ const register_user = () => {
         "cnic":cnic,
         "mobilenumber":mobilenumber,
         "accountnumber":accountnumber,
-        "address":address,
-        "image":image
+        "address":address
       })
    }).then((response) => response.json())
     .then((json) => {
@@ -153,10 +95,7 @@ const register_user = () => {
       <ImageBackground source={require('../assets/Images/pdflowersetproject10-adj-38_2.jpg')} style={styles.container}> 
         <ScrollView style={{width:"100%", marginTop:40,}}contentContainerStyle={{justifyContent:"center", alignItems:"center", paddingBottom:10,}} >
         <Text>Sign Up</Text> 
-        <View style={{ flex: 1, marginVertical:19, alignItems: 'center', justifyContent: 'center' }}>
-          <Button title="Upload Image" onPress={pickImage} />
-          {image && <Image source={{ uri: image }} style={{ width: 100, height: 100,marginTop:20, marginHorizontal:20, borderRadius:100, }} />}
-        </View>
+        
         <TextInput label="First name" value={firstName} setValue={setFirstName} error={fnerror} setError={setFnerror} />
        
         <TextInput label="Last name" value={lastName} setValue={setLastName} error={lnerror} setError={setlneror} />

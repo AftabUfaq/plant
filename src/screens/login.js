@@ -1,6 +1,5 @@
 import React, { useState,useEffect,useContext } from 'react';
-import { View, TextInput, ToastAndroid, StyleSheet,Text,BackgroundImage, ImageBackground, TouchableOpacity
-} from 'react-native'
+import { View, TextInput, ToastAndroid, StyleSheet,Text, ImageBackground, TouchableOpacity} from 'react-native'
 import { Link } from '@react-navigation/native';
 import {Picker} from '@react-native-picker/picker';
 import {Context as AuthContext} from '../context/AuthContext'
@@ -8,9 +7,9 @@ import api from '../constants/api'
 export default function Login ({navigation}) {
   const {signin} = useContext(AuthContext)
   const [selectedValue, setSelectedValue] = useState("grower");
-  let [userName, setUserName] = useState('');
-  let [userPassword, setPassword] = useState('');
-  let [id, setID] = useState('')
+  let [userName, setUserName] = useState('grower');
+  let [userPassword, setPassword] = useState('123456');
+  let [id, setID] = useState('109')
   
     let login_user = () => {
     if (userName === '' || userPassword === '') {
@@ -84,6 +83,7 @@ export default function Login ({navigation}) {
           })
        }).then((response) => response.json())
         .then((json) => {
+         
           if(json.error){
             ToastAndroid.showWithGravityAndOffset(
               "failded with some error",
@@ -135,16 +135,16 @@ return(
           >
             <Picker.Item label="Grower" value="grower" />
             <Picker.Item label="Vendor" value="vendor" />
-            <Picker.Item label="Soil Health Lab" value="agronomist" />
+            <Picker.Item label="Soil Health Lab" value="soilhealthlab" />
             <Picker.Item label="Sponsor" value="sponsor" />
-            <Picker.Item label="Agronomist" value="agro" />
+            <Picker.Item label="Agronomist" value="agronomist" />
             <Picker.Item label="Admin" value="admin" />
         </Picker>
         {selectedValue === "grower" || selectedValue === "vendor"?
         <View style={{width:'100%', justifyContent:"center", alignItems:"center"}}>
             <TextInput
               style={styles.input}
-              placeholder='Enter Id/'
+              placeholder='Enter Id'
               value={id}
               autoCapitalize="none"
               onChangeText={
@@ -152,7 +152,7 @@ return(
               }
             />
               <View style={styles.space}/>
-            <TouchableOpacity style={styles.loginBtn} onPress={farmerlogin}>
+            <TouchableOpacity style={styles.loginBtn} onPress={()=>farmerlogin()}>
               <Text style={styles.loginText}>LOGIN/لاگ ان کریں</Text>
             </TouchableOpacity>
         </View>
@@ -160,6 +160,7 @@ return(
         <View style={{width:'100%', justifyContent:"center", alignItems:"center"}}>
             <TextInput
               style={styles.input}
+              value={userName}
               placeholder='Email/ای میل'
               autoCapitalize="none"
               onChangeText={
@@ -168,6 +169,7 @@ return(
             />
           <TextInput
             style={styles.input}
+            value={userPassword}
             placeholder='Password/پاس ورڈ'
             secureTextEntry={false}
             autoCapitalize="none"

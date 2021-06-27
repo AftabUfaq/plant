@@ -7,6 +7,7 @@ export default function GrowerHome ({navigation}) {
   const message = "May the last Ashrah becomes the source of mughfirah for all of us. Share this prayer with everyone you know so that we can maximize the impact. Little deeds go a long way. "
   const [plants, setPlants] = useState([])
   const {state:{userdata}} = useContext(AuthContext);
+  
   useEffect(() => {
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
@@ -18,7 +19,7 @@ export default function GrowerHome ({navigation}) {
         area:`${userdata.area}`
       })
     };
-      fetch(`${api}/getalluserforvendor`, requestOptions)
+      fetch(`${api}/getbarcode`, requestOptions)
       .then((response) => response.json())
       .then((result) => {
           setPlants(result);
@@ -28,35 +29,16 @@ export default function GrowerHome ({navigation}) {
   },[])
 
 
-const Card = ({user})=> {
+const Card = ({code})=> {
   
   return (
     <TouchableOpacity style={styles.card}>
-      <Image source={{uri:user.image}} style={{width:40, height:40 , borderRadius:80, backgroundColor:"red"}} />
       <View style={{marginLeft:10}}>
-        <Text style={{color:"black"}}>Name: {user.username} </Text>
-        <Text style={{color:"black"}}>Role: {user.role} </Text>
-        <Text style={{color:"black"}}>Area: {user.area} </Text>
-      </View>
-      <View style={{marginLeft:10, flexDirection:"row",   width:120, justifyContent:"space-around"}} >
-        <TouchableOpacity   
-        onPress={() => {
-          Linking.openURL(
-            `http://api.whatsapp.com/send?text=${message}&phone=${user.mobilenumber}`
-          );
-        }}
-        style={{backgroundColor:"gray", justifyContent:"center", alignItems:"center", borderRadius:50, width:50, height:50,}}>
-            <Image style={{width:40,borderRadius:40, resizeMode:"center", height:40}} source={require('../../assets/Images/7b7bc658d3fce83780679e84dc62f2fa.png')}/>
-        </TouchableOpacity>
-        <TouchableOpacity 
-        onPress={() => {
-          Linking.openURL(
-            `sms:${user.mobilenumber}?body=${message}`
-          );
-        }}
-        style={{backgroundColor:"gray", justifyContent:"center", alignItems:"center", borderRadius:50, width:50, height:50,}}>
-          <Image style={{width:50,borderRadius:50, height:50}}  source={require('../../assets/Images/218-2180655_phone-call-icon-png.png')} />
-        </TouchableOpacity>
+        <Text style={{color:"black"}}>Type: {code.type} </Text>
+        <Text style={{color:"black"}}>Data: {code.data} </Text>
+        <Text style={{color:"black"}}>Area: {code.area} </Text>
+        <Text style={{color:"black"}}>UserId: {code.userid} </Text>
+        <Text style={{color:"black"}}>Status: {code.status} </Text>
       </View>
     </TouchableOpacity>
    );
@@ -69,6 +51,7 @@ const Card = ({user})=> {
            Plant For Properity
           </Text>
         </View>
+        {plants.length?
         <FlatList
             showsVerticalScrollIndicator={false}
             contentContainerStyle={{
@@ -79,9 +62,9 @@ const Card = ({user})=> {
             keyExtractor={(item, index) => index.toString()}
             data={plants}
             renderItem={({item}) => {
-              return <Card user={item} />;
+              return <Card code={item} />;
             }}
-          />
+          />:null}
       </SafeAreaView>
     </ImageBackground>
   );

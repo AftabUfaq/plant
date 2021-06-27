@@ -1,102 +1,51 @@
-import React from 'react';
-import { Text,Dimensions,View,SafeAreaView, FlatList,ImageBackground,TouchableOpacity ,Image, StyleSheet} from 'react-native';
-const width = Dimensions.get('window').width / 2.5 - 30;
-export default function SoilHealthLabHome ({navigation}) {
-  const plants = [
-    {
-      id: 1,
-      name: 'Upload Report',
-      img: require('../../assets/Images/scan.png'),
-      src: 'ScanCode'
-    },
-    {
-      id: 2,
-      name: 'Message',
-      img: require('../../assets/Images/7b7bc658d3fce83780679e84dc62f2fa.png'),
-      src: 'Message'
-    },  
-  ]
-  
-  onclick_item = (src) => {
-    switch (src) {
-      case "UploadReport":
-        //navigate
-        navigation.navigate('UploadReport')
-        break;
-        case "Message":
-          navigation.navigate('Message')
-          //navigate
-          break;
-      default:
-      //whatever you want
-    }
-  }
-  
-const Card =({plant})=>{
-  return (
-  <TouchableOpacity
-        style={styles.card}
-        onPress={item => onclick_item(plant.src)}
-        >
-          <View
-            style={{
-              height: 100,
-              alignItems: 'center',
-            }}>
-            <Image
-              source={plant.img}
-              style={{flex: 1, resizeMode: 'contain'}}
-            />
+import React from 'react'
+import {View, Text,StyleSheet,TouchableOpacity, Dimensions} from 'react-native'
+const width = Dimensions.get("window").width
+const SoilhealthLabHome = ({navigation}) => {
+  return(
+    <View style={styles.container}>
+        <View style={styles.main}>
+            <TouchableOpacity style={styles.box} onPress={() => navigation.navigate("UploadReport")}>
+              <Text style={{color:"#fff", fontWeight:"bold"}}>Upload</Text>
+            </TouchableOpacity>
+            <View style={styles.box}>
+
             </View>
-            <Text style={{fontSize: 17, marginTop: 10}}>
-            {plant.name}
-            </Text>
-        </TouchableOpacity>);
-}
-  return (
-    <ImageBackground source={require('../../assets/Images/pdflowersetproject10-adj-38_2.jpg')} style={styles.container}> 
-        <SafeAreaView
-      style={{flex: 1, paddingHorizontal: 20, backgroundColor: 'white'}}>
-        <View style={styles.header}>
-          <Text style={{fontSize: 38, color: '#00B761', fontWeight: 'bold'}}>
-           Plant For Properity
-          </Text>
         </View>
-        <FlatList
-        columnWrapperStyle={{justifyContent: 'space-between'}}
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={{
-          marginTop: 30,
-          paddingBottom: 50,
-        }}
-        numColumns={2}
-        data={plants}
-        renderItem={({item}) => {
-          return <Card plant={item} />;
-        }}
-      />
-      </SafeAreaView>
-    </ImageBackground>
-  );
+        <View style={styles.main}>
+            <View style={styles.box}>
+
+            </View>
+            <View style={styles.box}>
+
+            </View>
+        </View>
+    </View>
+  )
 }
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
+
+export default SoilhealthLabHome
+
+const styles= StyleSheet.create({
+  container:{
+    flex:1, 
+    justifyContent:"center", 
+    alignItems:"center"
   },
-  header: {
-    marginTop: 30,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  card:{
-    alignItems:'center',
-    justifyContent: 'center',
-    width,
-    marginHorizontal: 2,
-    borderRadius: 10,
-    marginBottom: 20,
-    padding: 15,
+  main:{
+      flexDirection:"row", 
+      marginTop:10,
+      width:width-20, 
+      justifyContent:"space-between", 
+      alignItems:"center", 
+      alignSelf:"center"
+    },
+  box:{
+    width:width/2 -25, 
+    backgroundColor:"gray", 
+    borderRadius:10, 
     height:150,
-    backgroundColor: '#F1F1F1',
+    alignItems:"center", 
+    justifyContent:"center"
   }
-});
+})

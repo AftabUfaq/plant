@@ -13,7 +13,7 @@ export default function GrowerHome ({navigation}) {
       id: 2,
       name: 'TaskList',
       img: require('../../assets/Images/depositphotos_79285928-stock-illustration-task-list-icon-from-commerce-removebg-preview.png'),
-      src: 'ViewUser'
+      src: 'UserCard'
     },  
     {
       id: 3,
@@ -73,18 +73,18 @@ const Card =({plant})=>{
           </Text>
         </View>
         <FlatList
-        columnWrapperStyle={{justifyContent: 'space-between'}}
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={{
-          marginTop: 30,
-          paddingBottom: 50,
-        }}
-        numColumns={2}
-        data={plants}
-        renderItem={({item}) => {
-          return <Card plant={item} />;
-        }}
-      />
+            columnWrapperStyle={{justifyContent: 'space-between'}}
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={{
+              marginTop: 30,
+              paddingBottom: 50,
+            }}
+            numColumns={2}
+            data={plants}
+            renderItem={({item}) => {
+              return <Card plant={item} />;
+            }}
+          />
       </SafeAreaView>
     </ImageBackground>
   );

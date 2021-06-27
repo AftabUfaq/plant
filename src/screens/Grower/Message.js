@@ -12,21 +12,19 @@ import api from '../../constants/api'
 export default function Contacts({navigation}) {
   const {state:{userdata}} = useContext(AuthContext);
   const [contact, setContact] = useState([])
-  
   useEffect(() => {
     var myHeaders = new Headers();
-  myHeaders.append("Content-Type", "application/json");
+     myHeaders.append("Content-Type", "application/json");
     var requestOptions = {
       method: 'POST',
       headers:myHeaders,
       body:JSON.stringify({
-        area:`${userdata.area}`,
-        role:`${userdata.role}`
+        "role":`${userdata.role}`,
+        "area":`${userdata.area}`
       })
     }
     fetch(`${api}/getallusers`,requestOptions).then((data) => data.json())
     .then((res) => {
-      console.log(res)
       setContact(res)
     }).catch((err) => {
       console.log(err)
@@ -35,7 +33,7 @@ export default function Contacts({navigation}) {
   
   
 
-    renderItem = ({item}) => {
+  renderItem = ({item}) => {
     return (
       <TouchableOpacity onPress={() => navigation.navigate('UserCard', item)}>
         <View style={styles.row}>

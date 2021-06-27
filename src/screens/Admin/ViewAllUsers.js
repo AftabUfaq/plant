@@ -1,24 +1,15 @@
-import React, {useEffect, useContext, useState} from 'react';
-import { Text,Dimensions,View,SafeAreaView, Linking, FlatList,ImageBackground,TouchableOpacity ,Image, StyleSheet} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import { Text,Dimensions,View,SafeAreaView, FlatList,ImageBackground,TouchableOpacity ,Image, StyleSheet} from 'react-native';
 const width = Dimensions.get('window').width-30;
-import {Context as AuthContext} from '../../context/AuthContext'
 import api from '../../constants/api'
-export default function GrowerHome ({navigation}) {
-  const message = "May the last Ashrah becomes the source of mughfirah for all of us. Share this prayer with everyone you know so that we can maximize the impact. Little deeds go a long way. "
+export default function ViewAllUsers ({navigation}) {
   const [plants, setPlants] = useState([])
-  const {state:{userdata}} = useContext(AuthContext);
   useEffect(() => {
-    var myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
     var requestOptions = {
       method: 'POST',
-      redirect: 'manual',
-      headers:myHeaders,
-      body:JSON.stringify({
-        area:`${userdata.area}`
-      })
+      redirect: 'manual'
     };
-      fetch(`${api}/getalluserforvendor`, requestOptions)
+      fetch(`${api}/getallusersforadmin`, requestOptions)
       .then((response) => response.json())
       .then((result) => {
           setPlants(result);
@@ -27,11 +18,32 @@ export default function GrowerHome ({navigation}) {
       })
   },[])
 
-
+const deleteuser = (id) => {
+  var myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/json");
+  var requestOptions = {
+    method: 'POST',
+    headers:myHeaders,
+    body:JSON.stringify({
+        id:id
+    }),
+    redirect: 'manual'
+  };
+ 
+  fetch(`${api}/deleteuser`, requestOptions)
+  .then((response) => response.json())
+  .then((result) => {
+    console.log(result)
+    let noJohn = plants.filter( el => el.id !== id ); 
+    setPlants(noJohn);
+  }).catch((err) => {
+    console.log(err)
+  })
+}
 const Card = ({user})=> {
   
   return (
-    <TouchableOpacity style={styles.card}>
+    <TouchableOpacity style={styles.card} onPress={() => navigation.navigate("ViewUser",{user})} >
       <Image source={{uri:user.image}} style={{width:40, height:40 , borderRadius:80, backgroundColor:"red"}} />
       <View style={{marginLeft:10}}>
         <Text style={{color:"black"}}>Name: {user.username} </Text>
@@ -39,23 +51,11 @@ const Card = ({user})=> {
         <Text style={{color:"black"}}>Area: {user.area} </Text>
       </View>
       <View style={{marginLeft:10, flexDirection:"row",   width:120, justifyContent:"space-around"}} >
-        <TouchableOpacity   
-        onPress={() => {
-          Linking.openURL(
-            `http://api.whatsapp.com/send?text=${message}&phone=${user.mobilenumber}`
-          );
-        }}
-        style={{backgroundColor:"gray", justifyContent:"center", alignItems:"center", borderRadius:50, width:50, height:50,}}>
-            <Image style={{width:40,borderRadius:40, resizeMode:"center", height:40}} source={require('../../assets/Images/7b7bc658d3fce83780679e84dc62f2fa.png')}/>
+        <TouchableOpacity onPress={() => {navigation.navigate("UpdateUser", {item:user})}}  style={{backgroundColor:"gray", justifyContent:"center", alignItems:"center", borderRadius:50, width:50, height:50,}}>
+            <Image style={{width:25, height:25}} source={require('../../assets//Images/user_refresh.png')}/>
         </TouchableOpacity>
-        <TouchableOpacity 
-        onPress={() => {
-          Linking.openURL(
-            `sms:${user.mobilenumber}?body=${message}`
-          );
-        }}
-        style={{backgroundColor:"gray", justifyContent:"center", alignItems:"center", borderRadius:50, width:50, height:50,}}>
-          <Image style={{width:50,borderRadius:50, height:50}}  source={require('../../assets/Images/218-2180655_phone-call-icon-png.png')} />
+        <TouchableOpacity style={{backgroundColor:"gray", justifyContent:"center", alignItems:"center", borderRadius:50, width:50, height:50,}} onPress={() => deleteuser(user.id)}>
+          <Image style={{width:25, height:25}}  source={require('../../assets//Images/remove-user-male.png')} />
         </TouchableOpacity>
       </View>
     </TouchableOpacity>

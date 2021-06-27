@@ -22,11 +22,12 @@ const UserCard = ({navigation,route}) => {
           </Text>
           <View style={styles.space}/>
           <View style={{flexDirection:'row', flex: 1}}>
-              <TouchableOpacity style={styles.button} onPress={() => {
-            Linking.openURL(
-              `http://api.whatsapp.com/send?text=${message}&phone=${contact.mobilenumber}`
-            );
-          }} >
+              <TouchableOpacity style={styles.button}
+               onPress={() => {
+                  Linking.openURL(
+                    `http://api.whatsapp.com/send?text=${message}&phone=${contact.mobilenumber}`
+                  );
+                }} >
                 <Image source={require('../../assets/Images/218-2180655_phone-call-icon-png.png')} style={styles.picture}/>
               </TouchableOpacity>
               <TouchableOpacity style={styles.button} onPress={() => {
@@ -56,4 +57,6 @@ const styles = StyleSheet.create({
   },
 });
 
+/*
 
+*/
