@@ -4,13 +4,12 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 
-import Ionicons from '@expo/vector-icons/Ionicons';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 
 
 import Login from './src/screens/login';
 import Signup from './src/screens/Signup';
-
+import Logout from './src/screens/logout'
 // grower home
 import GrowerHome from './src/screens/Grower/GrowerHome';
 import Message from './src/screens/Grower/Message';
@@ -30,20 +29,24 @@ import Notifications from './src/screens/Admin/AdminNotifications'
 
 // Agrnomist
 import AgronomistHome from './src/screens/Agronomist/AgronomistHome'
-import AgrnomistNotifications from './src/screens/Agronomist/Notifications
+import AgrnomistNotifications from './src/screens/Agronomist/Notifications'
+import AgrnomistDashboard from './src/screens/Agronomist/Home'
+import AgrnomistPackgeDesing from './src/screens/Agronomist/DesignPackage'
+
 
 // sponser
 import SponsorHome from './src/screens/Sponsor/SponsorHome'
 
 // vendor
 import VendorHome from './src/screens/Vendor/VendorHome'
-
+import VendorNotification from './src/screens/Vendor/VendorNotifications'
 
 //socialhealthlab
 import SoilhealthLabHome from './src/screens/SoilHealthLab/SoilHealthLabHome'
 import SoilhealthNotification from './src/screens/SoilHealthLab/SocialHealthLabNotifications';
 import UploadReport from './src/screens/SoilHealthLab/UploadReport'
-
+import ViewAllUsers from './src/screens/SoilHealthLab/ViewUsers'
+import SoilMessage from './src/screens/SoilHealthLab/UserCard'
 
 import {Context as AuthContext} from './src/context/AuthContext'
 import {Provider as AuthProvider} from './src/context/AuthContext'
@@ -67,7 +70,7 @@ const  App = () =>  {
   function AgronomistTabs() {
     return (
       <AgronomistTab.Navigator>
-        <AgronomistTab.Screen name="AgronomistHome" component={AgronomistHome}
+        <AgronomistTab.Screen name="Dasboard" component={AgrnomistDashboard}
           options={{
             tabBarLabel: 'Home',
             tabBarIcon: ({ color, size }) => (
@@ -111,7 +114,7 @@ const  App = () =>  {
             ),
           }}
         />
-        <AdminTab.Screen name="Notifications" component={Notifications}
+        <AdminTab.Screen name="packages" component={Notifications}
           options={{
             tabBarLabel: 'Notifications',
             tabBarIcon: ({ color, size }) => (
@@ -149,29 +152,29 @@ const  App = () =>  {
   const GrowerTab = createBottomTabNavigator();
   const GrowerDrawer = createDrawerNavigator();
 
-function GrowerTabs () {
-  return (
-    <GrowerTab.Navigator>
-      <GrowerTab.Screen name="GrowerHome" component={GrowerHome}
-        options={{
-          tabBarLabel: 'Home',
-          tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="home" color={color} size={size} />
-          ),
-        }}
-      />
-   
-      <GrowerTab.Screen name="Pyaments" component={Pyaments}
-        options={{
-          tabBarLabel: 'Payment History',
-          tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="bell" color={color} size={size} />
-          ),
-        }}
-      />
-    </GrowerTab.Navigator>
-  );
-}
+  function GrowerTabs () {
+    return (
+      <GrowerTab.Navigator>
+        <GrowerTab.Screen name="GrowerHome" component={GrowerHome}
+          options={{
+            tabBarLabel: 'Home',
+            tabBarIcon: ({ color, size }) => (
+              <MaterialCommunityIcons name="home" color={color} size={size} />
+            ),
+          }}
+        />
+    
+        <GrowerTab.Screen name="Pyaments" component={Pyaments}
+          options={{
+            tabBarLabel: 'Payment History',
+            tabBarIcon: ({ color, size }) => (
+              <MaterialCommunityIcons name="bell" color={color} size={size} />
+            ),
+          }}
+        />
+      </GrowerTab.Navigator>
+    );
+  }
   const GrowerScreens = ({navigation}) => {
     return(
       <GrowerStack.Navigator>
@@ -186,7 +189,10 @@ function GrowerTabs () {
   const AgronomistScreens = ({navigation}) => {
     return(
       <AgronomistStack.Navigator>
-        <AgronomistStack.Screen name="agronomisthome" component={AgronomistTabs} />
+        <AgronomistStack.Screen name="Dasboard" component={AgronomistTabs} />
+        <AgronomistStack.Screen name="AgronomistHome" component={AgronomistHome} />
+        <AgronomistStack.Screen name="AgrnomistDashboard" component={AgrnomistDashboard} />
+        <AgronomistStack.Screen name="AgrnomistPackgeDesing" component={AgrnomistPackgeDesing} />
       </AgronomistStack.Navigator>
     )
   }
@@ -245,14 +251,35 @@ function GrowerTabs () {
       <SoilHealthStack.Navigator>
         <SoilHealthStack.Screen name="SoilhealthLabHome" component={SoilhealthLabTabs} />
         <SoilHealthStack.Screen name="UploadReport" component={UploadReport} />
+        <SoilHealthStack.Screen name="ViewAllUsers" component={ViewAllUsers} />
+        <SoilHealthStack.Screen name="SoilMessage" component={SoilMessage} />
       </SoilHealthStack.Navigator>
     )
   }
+
+  
+  const VendorTab = createBottomTabNavigator();
+  const VendorDrawer = createDrawerNavigator();
   const VendorScreens = ({navigation}) => {
     return(
-      <VendorStack.Navigator>
-        <VendorStack.Screen name="vendorhome" component={VendorHome} />
-      </VendorStack.Navigator>
+      <VendorTab.Navigator>
+        <VendorTab.Screen name="vendorhome" component={VendorHome} 
+          options={{
+            tabBarLabel: 'Home',
+            tabBarIcon: ({ color, size }) => (
+              <MaterialCommunityIcons name="home" color={color} size={size} />
+            ),
+          }}
+        />
+        <VendorTab.Screen name="notification" component={VendorNotification} 
+          options={{
+            tabBarLabel: 'Payments',
+            tabBarIcon: ({ color, size }) => (
+              <MaterialCommunityIcons name="bell" color={color} size={size} />
+            ),
+          }}
+        />
+      </VendorTab.Navigator>
     )
   }
 
@@ -275,6 +302,7 @@ function GrowerTabs () {
       :userdata.role === "admin"
       ?<AdminDrawer.Navigator initialRouteName="Home">
          <AdminDrawer.Screen name="Home"  component={AdminScreens} />
+         <AdminDrawer.Screen name="Logout"  component={Logout} />
       </AdminDrawer.Navigator>
       
       :userdata.role === "sponsor"
@@ -283,17 +311,23 @@ function GrowerTabs () {
       :userdata.role === "grower"
       ?<GrowerDrawer.Navigator>
           <GrowerDrawer.Screen name="Home" component={GrowerScreens} /> 
+          <GrowerDrawer.Screen name="Logout"  component={Logout} />
         </GrowerDrawer.Navigator>
       :userdata.role === "agronomist"
       ? <AgronomistDrawer.Navigator initialRouteName="Home">
           <AgronomistDrawer.Screen name="Home"  component={AgronomistScreens} />
+          <AgronomistDrawer.Screen name="Logout"  component={Logout} />
       </AgronomistDrawer.Navigator>
   
       :userdata.role === "vendor"
-      ?<VendorScreens />
+      ?<VendorDrawer.Navigator>
+        <VendorDrawer.Screen name="home" component={VendorScreens} />
+        <VendorDrawer.Screen name="Logout"  component={Logout} />
+      </VendorDrawer.Navigator>
       : 
       <SoilhealthLabDrawer.Navigator>
         <SoilhealthLabDrawer.Screen name="Home" component={SoilhealthLabScreens} />
+        <SoilhealthLabDrawer.Screen name="Logout"  component={Logout} />
       </SoilhealthLabDrawer.Navigator>
       }
      </NavigationContainer>

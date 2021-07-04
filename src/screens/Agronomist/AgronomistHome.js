@@ -7,6 +7,7 @@ export default function GrowerHome ({navigation}) {
   const message = "May the last Ashrah becomes the source of mughfirah for all of us. Share this prayer with everyone you know so that we can maximize the impact. Little deeds go a long way. "
   const [plants, setPlants] = useState([])
   const {state:{userdata}} = useContext(AuthContext);
+
   useEffect(() => {
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
@@ -29,7 +30,7 @@ export default function GrowerHome ({navigation}) {
 
 
 const Card = ({user})=> {
-  
+ 
   return (
     <TouchableOpacity style={styles.card}>
       <Image source={{uri:user.image}} style={{width:40, height:40 , borderRadius:80, backgroundColor:"red"}} />
@@ -42,7 +43,7 @@ const Card = ({user})=> {
         <TouchableOpacity   
         onPress={() => {
           Linking.openURL(
-            `http://api.whatsapp.com/send?text=${message}&phone=${user.mobilenumber}`
+            `http://api.whatsapp.com/send?text=from:${userdata.firstname} to: ${user.firstname}: message: ${message}&phone=${user.mobilenumber}`
           );
         }}
         style={{backgroundColor:"gray", justifyContent:"center", alignItems:"center", borderRadius:50, width:50, height:50,}}>
@@ -51,7 +52,7 @@ const Card = ({user})=> {
         <TouchableOpacity 
         onPress={() => {
           Linking.openURL(
-            `sms:${user.mobilenumber}?body=${message}`
+            `sms:${user.mobilenumber}?body=from:${userdata.firstname} to: ${user.firstname}: message: ${message}&phone=${user.mobilenumber}`
           );
         }}
         style={{backgroundColor:"gray", justifyContent:"center", alignItems:"center", borderRadius:50, width:50, height:50,}}>

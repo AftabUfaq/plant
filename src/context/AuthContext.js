@@ -1,6 +1,6 @@
 import createDataContext from './createDataContext'
 // import AsyncStorage from '@react-native-community/async-storage'
-import { AsyncStorage} from 'react-native'
+import  AsyncStorage from  "@react-native-async-storage/async-storage"
 const authReducer = (state,action) =>{
     switch(action.type){
       case "logout":

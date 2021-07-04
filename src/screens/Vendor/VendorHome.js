@@ -39,24 +39,24 @@ const Card = ({user})=> {
         <Text style={{color:"black"}}>Area: {user.area} </Text>
       </View>
       <View style={{marginLeft:10, flexDirection:"row",   width:120, justifyContent:"space-around"}} >
-        <TouchableOpacity   
-        onPress={() => {
-          Linking.openURL(
-            `http://api.whatsapp.com/send?text=${message}&phone=${user.mobilenumber}`
-          );
-        }}
-        style={{backgroundColor:"gray", justifyContent:"center", alignItems:"center", borderRadius:50, width:50, height:50,}}>
-            <Image style={{width:40,borderRadius:40, resizeMode:"center", height:40}} source={require('../../assets/Images/7b7bc658d3fce83780679e84dc62f2fa.png')}/>
-        </TouchableOpacity>
-        <TouchableOpacity 
-        onPress={() => {
-          Linking.openURL(
-            `sms:${user.mobilenumber}?body=${message}`
-          );
-        }}
-        style={{backgroundColor:"gray", justifyContent:"center", alignItems:"center", borderRadius:50, width:50, height:50,}}>
-          <Image style={{width:50,borderRadius:50, height:50}}  source={require('../../assets/Images/218-2180655_phone-call-icon-png.png')} />
-        </TouchableOpacity>
+            <TouchableOpacity   
+            onPress={() => {
+              Linking.openURL(
+                `http://api.whatsapp.com/send?text=from:${userdata.firstname} to: ${user.firstname}: message: ${message}&phone=${user.mobilenumber}`
+              );
+            }}
+            style={{backgroundColor:"gray", justifyContent:"center", alignItems:"center", borderRadius:50, width:50, height:50,}}>
+                <Image style={{width:40,borderRadius:40, resizeMode:"center", height:40}} source={require('../../assets/Images/7b7bc658d3fce83780679e84dc62f2fa.png')}/>
+            </TouchableOpacity>
+            <TouchableOpacity 
+            onPress={() => {
+              Linking.openURL(
+                `sms:${user.mobilenumber}?body=from:${userdata.firstname} to: ${user.firstname}: message: ${message}&phone=${user.mobilenumber}`
+              );
+            }}
+            style={{backgroundColor:"gray", justifyContent:"center", alignItems:"center", borderRadius:50, width:50, height:50,}}>
+              <Image style={{width:50,borderRadius:50, height:50}}  source={require('../../assets/Images/218-2180655_phone-call-icon-png.png')} />
+            </TouchableOpacity>
       </View>
     </TouchableOpacity>
    );

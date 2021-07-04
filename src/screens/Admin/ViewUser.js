@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { TouchableOpacity, Text, View,Linking,StyleSheet, SafeAreaView } from 'react-native';
+import React, { useState, useEffect, useContext } from 'react';
+import { TouchableOpacity, Text,Image, View,Linking,StyleSheet, SafeAreaView } from 'react-native';
 
+import {Context as AuthContext} from '../../context/AuthContext'
 export default function ViewUser({navigation,route}){
+  const {state:{userdata}} = useContext(AuthContext);
  let user = route.params.user
  const message = "May the last Ashrah becomes the source of mughfirah for all of us. Share this prayer with everyone you know so that we can maximize the impact. Little deeds go a long way. "
   
@@ -17,28 +19,26 @@ export default function ViewUser({navigation,route}){
          <Text>Mobile Number: {user.mobilenumber}</Text>
          <Text>Role: {user.role}</Text>
           
-        <View style={{flexDirection:"row", justifyContent:"space-evenly", width:'100%'}}>
-          <TouchableOpacity 
-          onPress={() => {
-            Linking.openURL(
-              `http://api.whatsapp.com/send?text=${message}&phone=${user.mobilenumber}`
-            );
-          }}
-          
-          style={{...styles.button, backgroundColor:"green"}}>
-             <Text style={{fontWeight:"bold", color:"#fff"}}>Whatsapp </Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity 
-              onPress={() => {
-                Linking.openURL(
-                  `sms:${user.mobilenumber}?body=${message}`
-                );
-              }}
-           style={{...styles.button, backgroundColor:"blue"}}>
-             <Text style={{fontWeight:"bold", color:"#fff"}}>Message </Text>
-          </TouchableOpacity>
-        </View>
+         <View style={{marginLeft:10, flexDirection:"row",   width:120, justifyContent:"space-around"}} >
+            <TouchableOpacity   
+            onPress={() => {
+              Linking.openURL(
+                `http://api.whatsapp.com/send?text=from:${userdata.firstname} to: ${user.firstname}: message: ${message}&phone=${user.mobilenumber}`
+              );
+            }}
+            style={{backgroundColor:"gray", justifyContent:"center", alignItems:"center", borderRadius:50, width:50, height:50,}}>
+                <Image style={{width:40,borderRadius:40, resizeMode:"center", height:40}} source={require('../../assets/Images/7b7bc658d3fce83780679e84dc62f2fa.png')}/>
+            </TouchableOpacity>
+            <TouchableOpacity 
+            onPress={() => {
+              Linking.openURL(
+                `sms:${user.mobilenumber}?body=from:${userdata.firstname} to: ${user.firstname}: message: ${message}&phone=${user.mobilenumber}`
+              );
+            }}
+            style={{backgroundColor:"gray", justifyContent:"center", alignItems:"center", borderRadius:50, width:50, height:50,}}>
+              <Image style={{width:50,borderRadius:50, height:50}}  source={require('../../assets/Images/218-2180655_phone-call-icon-png.png')} />
+            </TouchableOpacity>
+      </View>
         <TouchableOpacity 
               onPress={() => {sentpayment()}}
            style={{...styles.button, backgroundColor:"gray"}}>

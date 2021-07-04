@@ -5,21 +5,16 @@ const SoilhealthLabHome = ({navigation}) => {
   return(
     <View style={styles.container}>
         <View style={styles.main}>
-            <TouchableOpacity style={styles.box} onPress={() => navigation.navigate("UploadReport")}>
-              <Text style={{color:"#fff", fontWeight:"bold"}}>Upload</Text>
+            
+            <TouchableOpacity style={styles.box} onPress={() => navigation.navigate("ViewAllUsers")}>
+              <Text style={{color:"#fff", fontWeight:"bold"}}>View All Users</Text>
             </TouchableOpacity>
-            <View style={styles.box}>
 
-            </View>
+            <TouchableOpacity style={styles.box} onPress={() => navigation.navigate("UploadReport")}>
+              <Text style={{color:"#fff", fontWeight:"bold"}}>Upload Report</Text>
+            </TouchableOpacity>
         </View>
-        <View style={styles.main}>
-            <View style={styles.box}>
-
-            </View>
-            <View style={styles.box}>
-
-            </View>
-        </View>
+        
     </View>
   )
 }

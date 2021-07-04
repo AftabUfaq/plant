@@ -6,10 +6,10 @@ import {Context as AuthContext} from '../context/AuthContext'
 import api from '../constants/api'
 export default function Login ({navigation}) {
   const {signin} = useContext(AuthContext)
-  const [selectedValue, setSelectedValue] = useState("grower");
-  let [userName, setUserName] = useState('grower');
+  const [selectedValue, setSelectedValue] = useState("soilhealthlab");
+  let [userName, setUserName] = useState('soilhealthlab');
   let [userPassword, setPassword] = useState('123456');
-  let [id, setID] = useState('109')
+  let [id, setID] = useState("109")
   
     let login_user = () => {
     if (userName === '' || userPassword === '') {
@@ -136,7 +136,7 @@ return(
             <Picker.Item label="Grower" value="grower" />
             <Picker.Item label="Vendor" value="vendor" />
             <Picker.Item label="Soil Health Lab" value="soilhealthlab" />
-            <Picker.Item label="Sponsor" value="sponsor" />
+           
             <Picker.Item label="Agronomist" value="agronomist" />
             <Picker.Item label="Admin" value="admin" />
         </Picker>
